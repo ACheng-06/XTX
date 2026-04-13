@@ -1,23 +1,25 @@
 <script setup>
-import Edit from './components/Edit.vue'
+  import axios from 'axios';
+  import Edit from './components/Edit.vue'
+  import { onMounted, ref } from 'vue'
 
-// TODO: 列表渲染
+  // TODO: 列表渲染
+  const list = ref([])
+  const getList = async () => {
+    const res = await axios.get('/list')
+    list.value = res.data
+  }
+  onMounted(() => getList())
+  // TODO: 删除功能
 
 
-// TODO: 删除功能
-
-
-// TODO: 编辑功能
+  // TODO: 编辑功能
 
 </script>
 
 <template>
   <div class="app">
-    <el-table :data="[{
-      id: 1,
-      name: 'jack',
-      place: 'none'
-    }]">
+    <el-table :data="list">
       <el-table-column label="ID" prop="id"></el-table-column>
       <el-table-column label="姓名" prop="name" width="150"></el-table-column>
       <el-table-column label="籍贯" prop="place"></el-table-column>
