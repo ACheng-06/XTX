@@ -11,10 +11,18 @@
   }
   onMounted(() => getList())
   // TODO: 删除功能
-
+  const onDelete = (id) => {
+    if (confirm("确定删除吗")) {
+      axios.delete(`/del/${id}`)
+      getList()
+    }
+  }
 
   // TODO: 编辑功能
-
+  const editRef = ref(null)
+  const onEdit = (row) => {
+    editRef.value.open(row)
+  }
 </script>
 
 <template>
@@ -24,14 +32,14 @@
       <el-table-column label="姓名" prop="name" width="150"></el-table-column>
       <el-table-column label="籍贯" prop="place"></el-table-column>
       <el-table-column label="操作" width="150">
-        <template #default>
-          <el-button type="primary" link>编辑</el-button>
-          <el-button type="danger" link>删除</el-button>
+        <template #default="{ row }">
+          <el-button type="primary" @click="onEdit(row)" link>编辑</el-button>
+          <el-button type="danger" @click="onDelete(row.id)" link>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
   </div>
-  <Edit />
+  <Edit ref="editRef" @on-updata="getList" />
 </template>
 
 <style scoped>
