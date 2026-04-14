@@ -1,13 +1,14 @@
-import { createApp } from "vue"
+import './assets/main.css'
 
-// 导入 ElementPlus 和 样式文件
-import ElementPlus from "element-plus"
-import "element-plus/dist/index.css"
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-import App from "./App.vue"
+import App from './App.vue'
+import router from './router'
+
 const app = createApp(App)
 
-// 使用 ElementPlus
-app.use(ElementPlus)
+app.use(createPinia())
+app.use(router)
 
-app.mount("#app")
+app.mount('#app')

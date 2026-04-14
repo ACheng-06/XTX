@@ -1,50 +1,85 @@
 <script setup>
-  import axios from 'axios';
-  import Edit from './components/Edit.vue'
-  import { onMounted, ref } from 'vue'
-
-  // TODO: 列表渲染
-  const list = ref([])
-  const getList = async () => {
-    const res = await axios.get('/list')
-    list.value = res.data
-  }
-  onMounted(() => getList())
-  // TODO: 删除功能
-  const onDelete = (id) => {
-    if (confirm("确定删除吗")) {
-      axios.delete(`/del/${id}`)
-      getList()
-    }
-  }
-
-  // TODO: 编辑功能
-  const editRef = ref(null)
-  const onEdit = (row) => {
-    editRef.value.open(row)
-  }
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div class="app">
-    <el-table :data="list">
-      <el-table-column label="ID" prop="id"></el-table-column>
-      <el-table-column label="姓名" prop="name" width="150"></el-table-column>
-      <el-table-column label="籍贯" prop="place"></el-table-column>
-      <el-table-column label="操作" width="150">
-        <template #default="{ row }">
-          <el-button type="primary" @click="onEdit(row)" link>编辑</el-button>
-          <el-button type="danger" @click="onDelete(row.id)" link>删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
-  <Edit ref="editRef" @on-updata="getList" />
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
 <style scoped>
-.app {
-  width: 980px;
-  margin: 100px auto 0;
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
 }
 </style>
