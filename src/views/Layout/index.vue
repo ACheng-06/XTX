@@ -1,4 +1,21 @@
+<script setup>
+  import LayoutNav from '@/views/Layout/components/LayoutNav.vue';
+  import LayoutHeader from '@/views/Layout/components/LayoutHeader.vue'
+  import LayoutFooter from '@/views/Layout/components/LayoutFooter.vue'
+  import LayoutFixed from './components/LayoutFixed.vue';
+  import { onMounted } from 'vue';
+
+  import { useCategoryStore } from '@/stores/category';
+  const categoryStore = useCategoryStore()
+  onMounted(() => {
+    categoryStore.getCategory()
+  })
+</script>
+
 <template>
-  <h1>我是默认页</h1>
+  <LayoutFixed />
+  <LayoutNav />
+  <LayoutHeader />
   <router-view></router-view>
+  <LayoutFooter />
 </template>
