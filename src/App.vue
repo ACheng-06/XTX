@@ -2,13 +2,6 @@
 
 <template>
   <router-view></router-view>
-  <div class="test">
-    test scs
-  </div>
 </template>
 
-<style scoped lang="scss">
-.test {
-  color: $xtxColor;
-}
-</style>
+<style scoped lang="scss"></style>

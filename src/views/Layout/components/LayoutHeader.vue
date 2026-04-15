@@ -1,11 +1,9 @@
 <script setup>
-  import { getCategoryAPI } from '@/apis/layout'
   import { useCategoryStore } from '@/stores/category';
   const categoryStore = useCategoryStore()
 </script>
 
 <template>
-  <div class="w">111</div>
   <header class='app-header'>
     <div class="container">
       <h1 class="logo">
@@ -13,7 +11,7 @@
       </h1>
       <ul class="app-header-nav">
         <li class="home" v-for="value in categoryStore.categoryList" key="value.id">
-          <RouterLink to="/">{{ value.name }}</RouterLink>
+          <RouterLink active-class="active" :to="`/category/${value.id}`">{{ value.name }}</RouterLink>
         </li>
       </ul>
       <div class="search">
@@ -28,10 +26,6 @@
 
 
 <style scoped lang='scss'>
-.w {
-  height: 1111px;
-}
-
 .app-header {
   background: #fff;
 
