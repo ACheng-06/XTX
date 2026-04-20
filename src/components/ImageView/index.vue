@@ -1,6 +1,7 @@
 <script setup>
   import { ref, watch } from 'vue';
   import { useMouseInElement } from '@vueuse/core'
+
   // 图片列表
   defineProps({
     imageList: {
