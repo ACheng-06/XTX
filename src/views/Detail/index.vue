@@ -40,6 +40,7 @@
         attrsText: skuObj.specsText,
         selected: true
       })
+      ElMessage.success('商品已添加至购物车')
     } else {
       ElMessage.warning('请选择规格')
     }

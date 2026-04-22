@@ -2,7 +2,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { ElMessage } from 'element-plus'
-  import { userStore } from '@/stores/user'
+  import { userStore } from '@/stores/userStore'
   import 'element-plus/theme-chalk/el-message.css'
   //表单校验(账户名和密码)
   const getuserStore = userStore()

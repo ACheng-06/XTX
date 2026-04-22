@@ -1,10 +1,9 @@
 <script setup>
-  import { userStore } from '@/stores/user'
+  import { userStore } from '@/stores/userStore'
   import { useRouter } from 'vue-router';
   const router = useRouter()
   const getuserStore = userStore()
   const confirm = () => {
-    console.log("我操");
     getuserStore.clearUserInfo()
     router.replace('/login')
   }
