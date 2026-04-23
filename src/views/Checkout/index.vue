@@ -1,6 +1,11 @@
 <script setup>
-  import { getCheckoutInfoAPI } from '@/apis/checkout';
+  import { getCheckoutInfoAPI, createOrderAPI } from '@/apis/checkout';
   import { ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { ElMessage } from 'element-plus'
+  import { useCartStore } from '@/stores/cartStore';
+  const cartStore = useCartStore()
+  const router = useRouter()
   const checkInfo = ref({}) // 订单对象
   const curAddress = ref({})  // 地址对象
 
@@ -24,6 +29,42 @@
   const confirm = () => {
     curAddress.value = activeAddress.value
     shoudialog.value = false
+  }
+
+  const createOrder = async () => {
+    if (!curAddress.value || !curAddress.value.id) {
+      ElMessage.warning('请选择收货地址')
+      return
+    }
+    if (!checkInfo.value.goods || checkInfo.value.goods.length === 0) {
+      ElMessage.warning('购物车为空，无法提交订单')
+      return
+    }
+    try {
+      const res = await createOrderAPI({
+        deliveryTimeType: 1,
+        payType: 1,
+        payChannel: 1,
+        buyerMessage: '',
+        goods: checkInfo.value.goods.map(item => {
+          return {
+            skuId: item.skuId,
+            count: item.count
+          }
+        }),
+        addressId: curAddress.value.id
+      })
+      const orderId = res.result.id
+      router.push({
+        path: '/pay',
+        query: {
+          id: orderId
+        }
+      })
+      await cartStore.updataNewList()
+    } catch (error) {
+      console.error('创建订单失败:', error)
+    }
   }
 
 </script>
@@ -120,7 +161,7 @@
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button type="primary" size="large" @click="createOrder">提交订单</el-button>
         </div>
       </div>
     </div>
