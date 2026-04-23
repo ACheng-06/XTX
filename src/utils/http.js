@@ -6,7 +6,7 @@ import router from '@/router/index'
 import 'element-plus/theme-chalk/el-message.css'
 const httpInstance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
-  timeout: 5000
+  timeout: 50000
 })
 // axios请求拦截器
 httpInstance.interceptors.request.use(config => {
